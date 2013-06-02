@@ -1,0 +1,34 @@
+{
+  "name": "ssh-key-decrypt",
+  "version": "0.0.0",
+  "description": "Decrypt and encrypted ssh private keys",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/isaacs/ssh-key-decrypt"
+  },
+  "keywords": [
+    "ssh",
+    "key",
+    "decrypt",
+    "pem",
+    "openssl",
+    "aes",
+    "aes129",
+    "aes256",
+    "aes128",
+    "des3",
+    "3des",
+    "des",
+    "des-ede3-cbc",
+    "passphrase"
+  ],
+  "author": "Isaac Z. Schlueter <i@izs.me> (http://blog.izs.me/)",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/isaacs/ssh-key-decrypt/issues"
+  }
+}
