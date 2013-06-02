@@ -100,9 +100,6 @@ function decrypt(encData, type, passphrase, iv, outEnc)
 function passphraseToKey(type, passphrase, salt)
   {
   debug('passphraseToKey', type, passphrase, salt);
-  var saltLen = 8;
-  if (salt.length !== saltLen)
-    salt = salt.slice(0, saltLen);
   var nkey = keyBytes[type];
 
   if (!nkey)
@@ -112,6 +109,9 @@ function passphraseToKey(type, passphrase, salt)
     }
 
   var niv = salt.length;
+  var saltLen = 8;
+  if (salt.length !== saltLen)
+    salt = salt.slice(0, saltLen);
   var mds = 16;
   var addmd = false;
   var md_buf;
@@ -133,10 +133,7 @@ function passphraseToKey(type, passphrase, salt)
     else
       c.update(passphrase);
 
-    if (salt.length === saltLen)
-      c.update(salt);
-    else
-      c.update(salt.slice(0, saltLen));
+    c.update(salt);
     md_buf = c.digest('buffer');
 
     var i = 0;
