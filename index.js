@@ -151,7 +151,7 @@ function passphraseToKey(type, passphrase, salt)
     niv -= steps;
     i += steps;
 
-		if ((nkey == 0) && (niv == 0)) break;
+    if ((nkey == 0) && (niv == 0)) break;
     }
 
   return key
