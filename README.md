@@ -1,6 +1,6 @@
 # ssh-key-decrypt
 
-Decrypt and encrypted ssh private keys
+Decrypt encrypted ssh private keys
 
 ## USAGE
 
