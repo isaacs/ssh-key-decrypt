@@ -1,7 +1,7 @@
 {
   "name": "ssh-key-decrypt",
   "version": "0.1.0",
-  "description": "Decrypt and encrypted ssh private keys",
+  "description": "Decrypt encrypted ssh private keys",
   "main": "index.js",
   "scripts": {
     "test": "node test"
