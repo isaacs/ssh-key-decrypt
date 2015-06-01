@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
+var t = require('tap');
 
 var decrypt = require('./index.js');
 
@@ -23,105 +24,67 @@ var tests =
   ];
 
 tests = tests.map(function(t)
-                    {
-                    return 'enc_' + t + '_asdf';
-                    });
+  {
+  return 'enc_' + t + '_asdf';
+  });
+
 tests.push('unencrypted');
-tests.push(null);
 
 tests.forEach(test);
 
-function test(f, n)
+function test(f)
   {
-  if (!f)
-    {
-    console.log('0..%d', n);
-    return;
-    }
-
   var file;
   var fileData;
-  var ok;
 
-  ok = tryThis(function()
+  tryThis(function()
     {
     file = path.resolve(__dirname, 'fixtures', 'id_rsa_' + f)
     fileData = fs.readFileSync(file, 'ascii');
-    }, n, f, 'failed reading test key');
-
-  if (!ok)
-    return;
+    }, f, 'failed reading test key');
 
   var data;
-  ok = tryThis(function()
+  tryThis(function()
     {
     assert(data = decrypt(fileData, 'asdf'));
     assert(Buffer.isBuffer(data), 'should be buffer');
-    }, n, f, 'failed decryption');
-
-  if (!ok)
-    return;
+    }, f, 'failed decryption');
 
   var hex;
-  ok = tryThis(function()
+  tryThis(function()
     {
     assert(hex = decrypt(fileData, 'asdf', 'hex'));
     assert.equal(typeof hex, 'string');
     assert.equal(hex, data.toString('hex'));
-    }, n, f, 'failed hex decryption');
-
-  if (!ok)
-    return;
+    }, f, 'failed hex decryption');
 
   var base64;
-  ok = tryThis(function()
+  tryThis(function()
     {
     assert(base64 = decrypt(fileData, 'asdf', 'base64'));
     assert.equal(typeof base64, 'string');
     assert.equal(base64, data.toString('base64'));
-    }, n, f, 'failed base64 decryption');
+    }, f, 'failed base64 decryption');
 
-  if (!ok)
-    return;
-
-  ok = tryThis(function()
+  tryThis(function()
     {
     assert.equal(data.length, unenc.length);
-    }, n, f, 'length differs');
+    }, f, 'length differs');
 
-  if (!ok)
-    return;
-
-  for (var i = 0; i < data.length; i++)
+  tryThis(function()
     {
-    ok = tryThis(function()
+    for (var i = 0; i < data.length; i++)
       {
-      assert.equal(data[i], unenc[i]);
-      }, n, f, 'differs at position ' + i);
-
-      if (!ok)
-        return;
-    }
-
-  console.log('ok %d %s\n', n+1, f);
+      assert.equal(data[i], unenc[i], 'differs at position ' + i);
+      }
+    }, f, 'byte check');
   }
 
-function tryThis(fn, n, f, msg)
+function tryThis(fn, f, msg)
   {
-  try
+  t.test(f, function (t)
     {
-    fn();
-    return true;
-    }
-  catch (er)
-    {
-    console.log('not ok %d %s', n+1, f);
-    var m = '';
-    if (msg)
-      m = msg + '\n';
-    m += er.stack // er.message;
-    console.log('# ' + m.split('\n').join('\n# '));
-    console.log('');
-    return false;
-    }
+    t.plan(1)
+    t.doesNotThrow(fn, msg)
+    })
   }

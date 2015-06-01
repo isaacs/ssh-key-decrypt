@@ -4,7 +4,7 @@
   "description": "Decrypt encrypted ssh private keys",
   "main": "index.js",
   "scripts": {
-    "test": "node test"
+    "test": "tap test.js"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,8 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/isaacs/ssh-key-decrypt/issues"
+  },
+  "devDependencies": {
+    "tap": "^1.2.0"
   }
 }
